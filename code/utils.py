@@ -1,7 +1,7 @@
 """
-Title: Utils functions
-Author: Red spotted bittern
+Title: Utils functions.
 
+Author: Red spotted bittern
 Purpose:
     tbc.
 
@@ -15,8 +15,7 @@ import random
 
 
 def init_augen():
-    """ Initiiert die sortierte Liste aller möglichen Würfe"""
-
+    """Initiiert die sortierte Liste aller möglichen Würfe."""
     # Liste und Dictionary
     augen = []
     deckelwert = {}
@@ -67,9 +66,8 @@ def init_augen():
 
 
 def name_generator(num_names):
-    """ This function returns as many names as specified. """
-
-    names = ["Elena", "Max", "Sophia", "Jackson", "Isabella", "Liam", "Ava",
+    """Return as many names as specified."""
+    names = ["Maria", "Max", "Sophia", "Jackson", "Isabella", "Liam", "Ava",
              "William", "Emma", "Oliver", "Mia", "James", "Charlotte",
              "Alexander", "Amelia"]
 

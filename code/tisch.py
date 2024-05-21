@@ -1,7 +1,7 @@
 """
-Title: Tisch class
-Author: Red spotted bittern
+Title: Tisch class.
 
+Author: Red spotted bittern
 Purpose:
     tbc.
 
@@ -134,41 +134,3 @@ class Tisch():
         assert len(self.runde) == 1, "No single loser yet."
 
         self.runde[0].lose()
-
-    def old_stechen(self, players, mode):
-        """ This function takes a list of players and performs a Stechen
-        between them in not more than three loops! """
-
-        for player in players:
-            player.stich_würfeln()
-
-        if mode == 'best':
-            threshold = max([p.get_stichwert() for p in players])
-        elif mode == 'worst':
-            threshold = min([p.get_stichwert() for p in players])
-
-        selected = []
-        for player in players:
-            if player.get_stichwert() == threshold:
-                selected.append(player)
-
-        return selected
-
-    def old_abrechnen(self, best, worst):
-        """ Verteilen der Bierdeckel am Ende eines Würfeldurchgangs """
-
-        # soll hier noch die Phase eingeführt werden oder so?
-
-        deckel = best.get_wurfkosten()
-
-        if len(self.runde) == 2:
-            # deckel werden in die mitte gespielt
-            best - deckel
-        elif self.deckel < 1:
-            # best gibt worst die deckelanzahl
-            best - deckel
-            worst + deckel
-        else:
-            # worst bekommt deckel vom stack
-            self.deckel -= deckel
-            worst + deckel

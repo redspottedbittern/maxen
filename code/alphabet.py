@@ -1,7 +1,7 @@
 """
-Title: Alphatbet class
-Author: Red spotted bittern
+Title: Alphatbet class.
 
+Author: Red spotted bittern
 Purpose:
     tbc.
 
@@ -11,6 +11,8 @@ Log:
     09.04.2024: Finished almost all Letters. Würfeln is left.
     09.04.2024: Moved the delta function here.
 """
+
+from omegabet import *
 
 
 def delta(gamestate, lexikon):
@@ -47,7 +49,7 @@ class Start(Alphabet):
 
         alphabet = [Würfeln(self.tisch)]
 
-        return self.tisch, alphabet, 'omegabet'
+        return self.tisch, alphabet, Gestartet(self.tisch)
 
 
 class Würfeln(Alphabet):
@@ -63,7 +65,7 @@ class Würfeln(Alphabet):
 
         alphabet = [Wurfranking(self.tisch)]
 
-        return self.tisch, alphabet, 'omegabet'
+        return self.tisch, alphabet, Gewürfelt(self.tisch)
 
 
 class Wurfranking(Alphabet):
@@ -86,7 +88,7 @@ class Wurfranking(Alphabet):
 
         alphabet.append(Abrechnen(self.tisch))
 
-        return self.tisch, alphabet, 'omegabet'
+        return self.tisch, alphabet, Geranked(self.tisch)
 
 
 class Stechen(Alphabet):
@@ -107,7 +109,7 @@ class Stechen(Alphabet):
         if len(self.tisch[self.mode]) > 1:
             alphabet.append(Stechen(self.tisch, self.mode))
 
-        return self.tisch, alphabet, 'omegabet'
+        return self.tisch, alphabet, Gestochen(self.tisch, self.mode)
 
 
 class Abrechnen(Alphabet):
@@ -123,7 +125,7 @@ class Abrechnen(Alphabet):
         # Übergib an Rauswerfen
         alphabet = [Rauswerfen(self.tisch)]
 
-        return self.tisch, alphabet, 'omegabet'
+        return self.tisch, alphabet, Gerechnet(self.tisch)
 
 
 class Rauswerfen(Alphabet):
@@ -133,16 +135,20 @@ class Rauswerfen(Alphabet):
 
     def do_it(self):
 
+        # Diese Liste wird nur für das Omegabet gepflegt
+        sind_raus = []
         # Darf schon rausgeworfen werden? Logisch Teil des Phasenchecker
         if self.tisch.deckel <= 0:
             # check if a player has 0 Bierdeckel and may leave the round
             for player in self.tisch.runde.copy():
                 if player.bierdeckel <= 0:
                     self.tisch - player
+                    # siehe obene
+                    sind_raus.append(player)
 
         alphabet = [Phasenchecker(self.tisch)]
 
-        return self.tisch, alphabet, 'omegabet'
+        return self.tisch, alphabet, Geworfen(self.tisch, sind_raus)
 
 
 class Phasenchecker(Alphabet):
@@ -160,6 +166,10 @@ class Phasenchecker(Alphabet):
         """
 
         assert len(self.tisch.runde) != 0, "something is fishy"
+
+        # das hier wird gemacht um dem Omegabet Sagen zu können, dass eine
+        # Veränderung stattgefunden hat
+        phase_old = self.tisch.phase
 
         alphabet = []
         if self.tisch.deckel > 0:
@@ -180,7 +190,13 @@ class Phasenchecker(Alphabet):
             self.tisch.phase = 'nostack'
             alphabet.append(Würfeln(self.tisch))
 
-        return self.tisch, alphabet, 'omegabet'
+        # Siehe oben, auch fürs Omegabet
+        if phase_old == self.tisch.phase:
+            changed = False
+        else:
+            changed = True
+
+        return self.tisch, alphabet, Gechecked(self.tisch, changed)
 
 
 class Punktabzug(Alphabet):
@@ -195,14 +211,14 @@ class Punktabzug(Alphabet):
 
         alphabet = [Reset(self.tisch)]
 
-        return self.tisch, alphabet, 'omegabet'
+        return self.tisch, alphabet, Geabzogen(self.tisch)
 
 
 class Reset(Alphabet):
     def __init__(self, tisch):
         super().__init__(tisch)
         self.tisch = tisch
-        self.mode = haus,tisch
+        self.mode = self.tisch
 
     def do_it(self):
 
@@ -211,4 +227,4 @@ class Reset(Alphabet):
 
         alphabet = [Würfeln(self.tisch)]
 
-        return self.tisch, alphabet, 'ENDE'
+        return self.tisch, alphabet, ENDE(self.tisch)

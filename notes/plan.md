@@ -17,11 +17,12 @@
 4+ Maxen regeln in klarer Struktur aufschreiben
 6+ Input in Python geben (=Tutorial)
 9. Spiel zum Laufen bringen
+12. Tests aufbauen
 
 ################################
 ## Part II: Grafisches Interface
 ### IDE
-1. Git Repo aufsetzen und CmdLine lernen (=Tutorial + MissingSemester)
+1.+ Git Repo aufsetzen und CmdLine lernen (=Tutorial + MissingSemester)
 2. Python Libraries (argparse, saving to file, linebreaks)
 3. Vim Plugins
 6. Latex üben + VimLatex

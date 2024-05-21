@@ -1,7 +1,7 @@
 """
-Title: Main function for the Maxen game
-Author: Red spotted bittern
+Title: Main function for the Maxen game.
 
+Author: Red spotted bittern
 Purpose:
     tbc.
 
@@ -25,6 +25,7 @@ Options:
 
 from tisch import Tisch
 from alphabet import Start, delta
+from omegabet import ENDE
 
 
 def main(num_players):
@@ -33,11 +34,13 @@ def main(num_players):
     lexikon = [Start(engine)]
     omegabet = ''
 
-    while omegabet != 'ENDE':
+    while type(omegabet) != ENDE:
         engine, lexikon, omegabet = delta(engine, lexikon)
+        omegabet.inform()
 
-        print(lexikon)
+        # print(lexikon)
 
-    print(engine)
-    print(engine.deckel)
-    print(omegabet)
+    # print(engine)
+    # print(engine.deckel)
+    # print(omegabet)
+    print("Danke an alle Beteiligten.")

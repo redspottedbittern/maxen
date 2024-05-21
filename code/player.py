@@ -1,7 +1,7 @@
 """
-Title: A player with a lot of magic methods
-Author: Red spotted bittern
+Title: A player with a lot of magic methods.
 
+Author: Red spotted bittern
 Purpose:
     This is the player class that gives them actions!
 
@@ -15,8 +15,10 @@ from utils import init_augen
 
 
 class Player():
-    """ This is the player class. The player stores information about themelves
-    and can throw dice. """
+    """This is the player class.
+
+    The player stores information about themelves and can throw dice.
+    """
 
     def __init__(self, name, bierdeckel=0, lost_games=0,
                  total_num_würfel=3, seiten=6):
@@ -82,9 +84,9 @@ class Player():
         self.wurf = self.würfeln(wurf)
 
     def würfeln(self, wurf):
-        """ Nimmt eine Liste an Zahlen und fügt dieser solange Zahlen der
-        self.seiten hinzu bis es total_num_würfel sind. """
-
+        """Nimmt eine Liste an Zahlen und fügt dieser solange Zahlen der
+        self.seiten hinzu bis es total_num_würfel sind.
+        """
         for num in range(self.total_num_würfel - len(wurf)):
             wurf.append(random.choice(self.seiten))
 
@@ -96,8 +98,7 @@ class Player():
         self.stichwurf = self.würfeln([])
 
     def six2one(self, drei6=False):
-        """ Transformiert zwei oder drei 6er zu einer oder zwei 1er """
-
+        """Transformiert zwei oder drei 6er zu einer oder zwei 1er."""
         if len(self.wurf) == 3 and self.wurf.count(6) > 1:
             if drei6:
                 self.wurf = [1, 1]
